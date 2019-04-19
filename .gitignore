@@ -103,6 +103,8 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# zip
+# custom
 *.gz
 *.html
+*.meta
+*.DS_Store
