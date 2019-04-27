@@ -119,3 +119,7 @@ venv.bak/
 *.html
 *.meta
 *.DS_Store
+
+# images
+*.png 
+*.jpg
