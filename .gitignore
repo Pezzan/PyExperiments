@@ -119,6 +119,10 @@ venv.bak/
 *.html
 *.meta
 *.DS_Store
+*.zraw
+*.mhd
+*.npy
+*.npz
 
 # images
 *.png 
