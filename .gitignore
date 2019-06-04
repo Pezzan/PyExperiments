@@ -123,6 +123,7 @@ venv.bak/
 *.mhd
 *.npy
 *.npz
+*.pth
 
 # images
 *.png 
