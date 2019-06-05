@@ -124,6 +124,8 @@ venv.bak/
 *.npy
 *.npz
 *.pth
+*.pt
+*.pkl
 
 # images
 *.png 
