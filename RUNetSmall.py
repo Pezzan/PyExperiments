@@ -225,14 +225,14 @@ class RUNetGen(nn.Module):
         print("\n------Initializing RUNetGen------\n")
         
         self.conv1 = conv(3, self.fil)
-        self.conR1 = convRNN(self.fil, self.inDim,
-                             self.hidSize, layers=3, seqLen=3)
+        self.conR1 = convRNN(3, self.inDim,
+                             self.hidSize, layers=3, seqLen=2)
         self.rset1 = conv4rnn(self.hidSize, self.fil)
         self.pool1 = pool()
         self.conv2 = conv(self.fil, self.fil*2)
-        self.conR2 = convRNN(self.fil*2, (int(self.inDim[0]/2),
+        self.conR2 = convRNN(self.fil, (int(self.inDim[0]/2),
                                         int(self.inDim[1]/2)),
-                             self.hidSize*2, layers=3, seqLen=3)
+                             self.hidSize*2, layers=3, seqLen=2)
         self.rset2 = conv4rnn(self.hidSize*2, self.fil*2)
         self.pool2 = pool()
         
@@ -246,12 +246,12 @@ class RUNetGen(nn.Module):
         self.last = last(self.fil, 3)
         
     def forward(self, img):
-        conv1 = self.conv1(img)
-        conR1 = self.conR1(conv1)
+        #conv1 = self.conv1(img)
+        conR1 = self.conR1(img)
         rset1 = self.rset1(conR1)
         pool1 = self.pool1(rset1)
-        conv2 = self.conv2(pool1)
-        conR2 = self.conR2(conv2)
+        #conv2 = self.conv2(pool1)
+        conR2 = self.conR2(pool1)
         rset2 = self.rset2(conR2)
         pool2 = self.pool2(rset2)
         
@@ -275,7 +275,7 @@ class RUNetGen(nn.Module):
 batch_size = 2
 img_size = 256
 lr = 0.0002
-epoch = 3
+epoch = 5
 
 # Generator
 net = RUNetGen(24, 8, (img_size, img_size))
@@ -292,7 +292,7 @@ trainset = dset.ImageFolder(root=img_dir,
                             ]))
 trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
                                           shuffle=True, 
-                                          num_workers=0)
+                                          num_workers=2)
 
 recon_loss_func = nn.MSELoss()
 gen_optimizer = torch.optim.Adam(net.parameters(),lr=lr)
